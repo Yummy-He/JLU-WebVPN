@@ -219,7 +219,7 @@
         statusEl.remove();
 
         // 对短网址的域名进行转写
-        const shortResult = Converter.convert(shortUrl, { protocol: result.protocol });
+        const shortResult = Converter.convert(shortUrl);
         if (!shortResult || shortResult.needsShort) {
           throw new Error('短网址转换失败');
         }

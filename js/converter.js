@@ -152,10 +152,8 @@ const Converter = (() => {
    *   - hostname: 提取的域名
    *   - needsShort: 是否需要短网址（域名过长）
    */
-  function convert(input, options = {}) {
-    const { protocol: protocolOverride } = options;
-    const { protocol: parsedProtocol, hostname, path } = parseURL(input);
-    const protocol = protocolOverride || parsedProtocol;
+  function convert(input) {
+    const { protocol, hostname, path } = parseURL(input);
     if (!hostname) return null;
 
     if (!needsExtension(hostname)) {
