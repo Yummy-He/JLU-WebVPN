@@ -219,7 +219,7 @@ a:hover {
 
 /* Blog link */
 .blog-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 6px;
   font-size: 0.9rem;
