@@ -1,0 +1,9 @@
+# 敏感配置文件（含 API 密钥和代理地址）
+js/config.js
+
+# 详细使用手册（仅本地保留）
+MANUAL.md
+
+# 系统文件
+.DS_Store
+Thumbs.db

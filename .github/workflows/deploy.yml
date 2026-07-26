@@ -1,0 +1,48 @@
+# GitHub Actions: 部署到 GitHub Pages（从 Secrets 生成 config.js）
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main, gh-pages]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate config.js from Secrets
+        run: |
+          cat > js/config.js << 'EOF'
+          window.WebVPNConfig = {
+            SHORTENER_API_KEY: '${{ secrets.SHORTENER_API_KEY }}',
+            CORS_PROXY_URL: '${{ secrets.CORS_PROXY_URL }}'
+          };
+          EOF
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
